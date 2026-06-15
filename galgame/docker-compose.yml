@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: galgame-postgres
+    environment:
+      POSTGRES_DB: galgame_db
+      POSTGRES_USER: galgame_user
+      POSTGRES_PASSWORD: galgame_pass
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - galgame-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U galgame_user -d galgame_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: galgame-backend
+    environment:
+      DB_HOST: postgres
+      DB_NAME: galgame_db
+      DB_USER: galgame_user
+      DB_PASSWORD: galgame_pass
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - galgame-network
+    expose:
+      - "5000"
+
+  nginx:
+    image: nginx:alpine
+    container_name: galgame-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./frontend:/usr/share/nginx/html:ro
+    depends_on:
+      - backend
+    networks:
+      - galgame-network
+
+networks:
+  galgame-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

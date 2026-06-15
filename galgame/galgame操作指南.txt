@@ -1,0 +1,24 @@
+  # 1. 解压
+  unzip galgame.zip
+
+  # 2. 进入目录
+  cd galgame
+
+  # 2. 启动（需要 Docker Desktop 已运行）
+  docker-compose up -d --build
+
+  # 4. 浏览器打开
+  http://localhost
+
+  ---
+
+  如果你也是国内网络，Docker Hub 拉镜像会超时，需要先配镜像加速：
+
+  ▎ Docker Desktop → 设置 → Docker Engine → 添加 registry-mirrors，然后 Apply & Restart：
+  ▎
+  ▎ "registry-mirrors": [
+  ▎   "https://docker.m.daocloud.io",
+  ▎   "https://dockerhub.timeweb.cloud"
+  ▎ ]
+
+  ---

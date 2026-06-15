@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>📖 星光图书馆 · 视觉小说</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- 背景层 -->
+        <div id="background-layer">
+            <img id="bg-image" src="assets/bg/library.jpg" alt="背景">
+            <div id="bg-overlay"></div>
+        </div>
+
+        <!-- 立绘层 -->
+        <div id="sprite-layer">
+            <img id="sprite-left" class="sprite hidden" src="" alt="立绘">
+            <img id="sprite-right" class="sprite hidden" src="" alt="立绘">
+            <img id="sprite-center" class="sprite hidden" src="" alt="立绘">
+        </div>
+
+        <!-- 对话框层 -->
+        <div id="dialogue-box">
+            <div id="speaker-name">系统</div>
+            <div id="message-text"></div>
+            <div id="continue-icon" class="hidden">▼ 点击继续</div>
+        </div>
+
+        <!-- 选项层 -->
+        <div id="choices-box" class="hidden">
+            <div id="choices-list"></div>
+        </div>
+
+        <!-- 好感度显示 -->
+        <div id="affection-display">
+            <div class="affection-bar">
+                <span class="aff-icon">🌟</span>
+                <span class="aff-name">星野灯</span>
+                <div class="aff-progress-bg">
+                    <div id="aff-hotaru-fill" class="aff-progress-fill hotaru-fill"></div>
+                </div>
+                <span id="aff-hotaru-val" class="aff-val">0</span>
+            </div>
+            <div class="affection-bar">
+                <span class="aff-icon">📖</span>
+                <span class="aff-name">月之濑静</span>
+                <div class="aff-progress-bg">
+                    <div id="aff-shizuka-fill" class="aff-progress-fill shizuka-fill"></div>
+                </div>
+                <span id="aff-shizuka-val" class="aff-val">0</span>
+            </div>
+        </div>
+
+        <!-- 标题菜单 -->
+        <div id="title-menu" class="menu-overlay">
+            <div class="menu-content">
+                <h1>📖 星光图书馆</h1>
+                <p class="subtitle">—— 书灵与你の回忆录 ——</p>
+                <div class="menu-buttons">
+                    <button id="new-game-btn" class="menu-btn">✨ 开始新游戏</button>
+                    <button id="load-game-btn" class="menu-btn">💾 读取存档</button>
+                    <button id="stats-btn" class="menu-btn">📊 全球统计</button>
+                </div>
+                <div class="player-name-input hidden" id="name-input-area">
+                    <input type="text" id="player-name" placeholder="输入你的名字" maxlength="20">
+                    <button id="confirm-name-btn" class="menu-btn">确定</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 存档/读档界面 -->
+        <div id="save-load-menu" class="menu-overlay hidden">
+            <div class="menu-content">
+                <h2 id="save-load-title">💾 存档</h2>
+                <div id="save-slots" class="save-slots"></div>
+                <button id="close-save-menu" class="menu-btn">返回</button>
+            </div>
+        </div>
+
+        <!-- 全局统计界面 -->
+        <div id="stats-menu" class="menu-overlay hidden">
+            <div class="menu-content stats-content">
+                <h2>📊 全球玩家统计</h2>
+                <div id="stats-content">
+                    <p>加载中...</p>
+                </div>
+                <button id="close-stats-btn" class="menu-btn">返回</button>
+            </div>
+        </div>
+
+        <!-- 结局界面 -->
+        <div id="ending-menu" class="menu-overlay hidden">
+            <div class="menu-content ending-content">
+                <h2 id="ending-title">结局</h2>
+                <p id="ending-text"></p>
+                <button id="ending-return-btn" class="menu-btn">🏠 返回标题</button>
+            </div>
+        </div>
+
+        <!-- 底部控制栏 -->
+        <div id="control-bar">
+            <button id="save-btn" class="ctrl-btn">💾 存档</button>
+            <button id="load-quick-btn" class="ctrl-btn">📂 读档</button>
+            <button id="auto-btn" class="ctrl-btn">▶ 自动</button>
+            <button id="skip-btn" class="ctrl-btn">⏩ 跳过</button>
+            <button id="title-btn" class="ctrl-btn">🏠 标题</button>
+        </div>
+
+        <!-- BGM 控制 -->
+        <div id="bgm-control">
+            <button id="bgm-toggle">🔊 BGM</button>
+        </div>
+    </div>
+
+    <!-- 音频元素 - 先尝试 MP3，不存在则使用 WAV 占位 -->
+    <audio id="bgm-player" loop preload="auto">
+        <source src="assets/audio/bgm_normal.mp3" type="audio/mpeg">
+        <source src="assets/audio/bgm_normal_placeholder.wav" type="audio/wav">
+    </audio>
+    <audio id="se-player" preload="auto">
+        <source src="assets/audio/click.mp3" type="audio/mpeg">
+        <source src="assets/audio/click_placeholder.wav" type="audio/wav">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
